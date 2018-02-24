@@ -5,11 +5,12 @@
 </template>
 
 <script>
-import auth from "./auth"
+import auth from "./utils/auth"
 export default {
 	data() {
 		return {
 			loggedIn: auth.loggedIn(),
+			profile: auth.getProfile(),
 		}
 	},
 	created() {

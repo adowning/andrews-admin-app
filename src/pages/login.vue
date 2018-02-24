@@ -21,13 +21,13 @@
 <script>
 import { required, email } from "vuelidate/lib/validators"
 import { Notify } from "quasar"
-import auth from "../auth"
-
+import auth from "../utils/auth"
+import router from "../router"
 export default {
 	data() {
 		return {
 			form: {
-				email: "a@a.com",
+				email: "ash@andrewscarpetcleaning.com",
 				pass: "asdfasdf",
 			},
 		}
@@ -47,8 +47,10 @@ export default {
 				debugger
 				return
 			}
+			console.log('asdf')
 			auth.login(this.form.email, this.form.pass, loggedIn => {
 				if (!loggedIn) {
+					console.log(loggedIn)
 					this.error = true
 				} else {
 					console.log(loggedIn)

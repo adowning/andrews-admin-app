@@ -1,14 +1,16 @@
-import DefaultLayout from "layouts/default"
-// import LoginLayout from "layouts/login"
+import auth from "../utils/auth"
 
-import Home from "pages/index"
+import DefaultLayout from "layouts/default"
+
+import Dashboard from "pages/index"
 import LiveView from "pages/liveview"
 import Login from "pages/login"
 import Hardware from "pages/hardware"
+import WorkShop from "pages/workshop"
 import Consumables from "pages/consumables"
 import Directory from "pages/directory"
+import Applicants from "pages/applicants"
 import Profile from "pages/profile"
-import auth from "../auth"
 
 export default [
   {
@@ -20,9 +22,10 @@ export default [
     component: DefaultLayout,
     beforeEnter: requireAuth,
     children: [
-      { path: "/", component: Home, beforeEnter: requireAuth },
+      { path: "/", component: Dashboard, beforeEnter: requireAuth },
 
       { path: "/liveview", component: LiveView, beforeEnter: requireAuth },
+      { path: "/workshop", component: WorkShop, beforeEnter: requireAuth },
 
       { path: "/hardware", component: Hardware, beforeEnter: requireAuth },
 
@@ -31,10 +34,10 @@ export default [
         component: Consumables,
         beforeEnter: requireAuth,
       },
+      { path: "/directory", component: Directory, beforeEnter: requireAuth },
+      { path: "/applicants", component: Directory, beforeEnter: requireAuth },
 
       { path: "/profile", component: Profile, beforeEnter: requireAuth },
-
-      { path: "/directory", component: Directory, beforeEnter: requireAuth },
     ],
   },
   {

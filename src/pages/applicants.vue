@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
   LiveView
-   <!-- <p>Yay you made it <b>{{info.username}}</b>!</p> -->
+   <p>Yay you made it <b>{{info.username}}</b>!</p>
   </q-page>
 </template>
 
@@ -10,9 +10,8 @@
 </style>
 
 <script>
-import auth from "../utils/auth"
 export default {
-	name: "LiveView",
+	name: "Applicants",
 	data() {
 		return {
 			// info: JSON.parse(auth.getUserInfo()),

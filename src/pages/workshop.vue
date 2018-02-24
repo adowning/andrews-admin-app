@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
   LiveView
-   <!-- <p>Yay you made it <b>{{info.username}}</b>!</p> -->
+   <p>Yay you made it <b>{{info.username}}</b>!</p>
   </q-page>
 </template>
 
@@ -15,7 +15,7 @@ export default {
 	name: "LiveView",
 	data() {
 		return {
-			// info: JSON.parse(auth.getUserInfo()),
+			info: JSON.parse(auth.getUserInfo()),
 		}
 	},
 }
