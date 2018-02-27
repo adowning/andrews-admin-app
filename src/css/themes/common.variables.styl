@@ -1,22 +1,46 @@
-// App Shared Variables
-// --------------------------------------------------
-// To customize the look and feel of this app, you can override
-// the Stylus variables found in Quasar's source Stylus files. Setting
-// variables before Quasar's Stylus will use these variables rather than
-// Quasar's default Stylus variable values. Stylus variables specific
-// to the themes belong in either the variables.ios.styl or variables.mat.styl files.
+// Base component color of "Polar Night".
+//
+// Used for texts, backgrounds, carets and structuring characters like curly- and square brackets.
+//
+// Markup:
+// <div style="background-color:#2e3440; width=60; height=60"></div>
+//
+// Styleguide Nord - Polar Night
+nord0 = #2e3440;
 
-// Check documentation for full list of Quasar variables
+// Lighter shade color of the base component color.
+//
+// Used as a lighter background color for UI elements like status bars.
+//
+// Markup:
+// <div style="background-color:#3b4252; width=60; height=60"></div>
+//
+// Styleguide Nord - Polar Night
+nord1 = #3b4252;
 
+// Lighter shade color of the base component color.
+//
+// Used as line highlighting in the editor.  
+// In the UI scope it may be used as selection- and highlight color.
+//
+// Markup:
+// <div style="background-color:#434c5e; width=60; height=60"></div>
+//
+// Styleguide Nord - Polar Night
+nord2 = #434c5e;
 
-// App Shared Color Variables
-// --------------------------------------------------
-// It's highly recommended to change the default colors
-// to match your app's branding.
-
-// $primary   = #027be3
-$primary   = #81a1c1
-$secondary = #5e81ac
+// Lighter shade color of the base component color.
+//
+// Used for comments, invisibles, indent- and wrap guide marker.  
+// In the UI scope used as pseudoclass color for disabled elements.
+//
+// Markup:
+// <div style="background-color:#4c566a; width=60; height=60"></div>
+//
+// Styleguide Nord - Polar Night
+$primary  = #4c566a;
+// $primary   = #2e3440
+$secondary   = #81a1c1
 $tertiary  = #8fbcbb
 
 $neutral   = #E0E1E2
@@ -25,18 +49,17 @@ $negative  = #DB2828
 $info      = #31CCEC
 $warning   = #F2C037
 
-$body-background	= #4c566a
+$body-background	= #2e3440
 $body-color = #d8dee9
 $table-hover-background	= #3b4252
 $item-highlight-color	= #434c5e
 $item-selected-color	= #434c5e
 
-
-$layout-aside-color = #3b4252
-$layout-aside-background= #3b4252
 $layout-aside-left-width	= 220px
 $layout-aside-shadow	 = $shadow-0
 $layout-header-shadow	 = $shadow-0
+$layout-footer-shadow	 = $shadow-0
+
 :root {
   --nord0: #2e3440;
   --nord1: #3b4252;

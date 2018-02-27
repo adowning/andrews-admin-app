@@ -17,13 +17,10 @@ function createWindow() {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    width: 1400,
+    width: 1600,
     height: 900,
     webPreferences: { webSecurity: false },
     allowRunningInsecureContent: true,
-    // "web-preferences": {
-    //   webSecurity: false,
-    // },
     useContentSize: true,
   })
 

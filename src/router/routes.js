@@ -2,15 +2,17 @@ import auth from "../utils/auth"
 
 import DefaultLayout from "layouts/default"
 
+import Login from "pages/login"
 import Dashboard from "pages/index"
 import LiveView from "pages/liveview"
-import Login from "pages/login"
-import Hardware from "pages/hardware"
+import Hardware from "../pages/hardware/"
 import WorkShop from "pages/workshop"
 import Consumables from "pages/consumables"
 import Directory from "pages/directory"
 import Applicants from "pages/applicants"
 import Profile from "pages/profile"
+import Documents from "pages/documents"
+import Logs from "pages/logs"
 
 export default [
   {
@@ -38,6 +40,8 @@ export default [
       { path: "/applicants", component: Directory, beforeEnter: requireAuth },
 
       { path: "/profile", component: Profile, beforeEnter: requireAuth },
+      { path: "/documents", component: Documents, beforeEnter: requireAuth },
+      { path: "/logs", component: Logs, beforeEnter: requireAuth },
     ],
   },
   {
@@ -48,7 +52,7 @@ export default [
 ]
 function requireAuth(to, from, next) {
   console.log(auth.loggedIn())
-  if (!auth.loggedIn()) {
+  if (!window.localStorage.getItem("token")) {
     next({
       path: "/login",
       query: { redirect: to.fullPath },
@@ -57,3 +61,4 @@ function requireAuth(to, from, next) {
     next()
   }
 }
+

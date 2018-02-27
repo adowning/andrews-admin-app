@@ -1,21 +1,34 @@
 <template>
-  <div>
-    <q-input
-      v-model="form.email"
-      placeholder="email"
-      @blur="$v.form.email.$touch"
-      @keyup.enter="submit"
-      :error="$v.form.email.$error"
-    />
-   <q-input
-      v-model="form.pass"
-      placeholder="password"
-      @blur="$v.form.pass.$touch"
-      @keyup.enter="submit"
-      :error="$v.form.pass.$error"
-    />
-    <q-btn color="primary" @click="submit">Submit</q-btn>
-  </div>
+
+<q-layout>
+    <q-page-container>
+<q-page class="flex flex-center">
+ 
+
+    <div class="text-center col-sm-12">
+    <!-- <img src="../assets/quasar-logo-full.svg" class="center-block logo">
+			 -->
+      <form >
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+          <input class="form-control" name="email" placeholder="Email" type="text" v-model="form.email">
+        </div>
+
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+          <input class="form-control" name="password" placeholder="Password" type="password" v-model="form.pass">
+        </div>
+           <q-btn color="primary" @click="submit">Submit</q-btn>
+			  <!-- <button type="submit" v-bind:class="'btn btn-primary btn-lg ' + loading">Submit</button> -->
+      </form>
+
+      <!-- errors -->
+      <!-- <div v-if=response class="text-red"><p class="vertical-5p lead">{{response}}</p></div> -->
+    </div>
+ 
+</q-page>
+    </q-page-container>
+</q-layout>
 </template>
 
 <script>
@@ -27,7 +40,7 @@ export default {
 	data() {
 		return {
 			form: {
-				email: "ash@andrewscarpetcleaning.com",
+				email: "ashdowning@gmail.com",
 				pass: "asdfasdf",
 			},
 		}
@@ -47,9 +60,11 @@ export default {
 				debugger
 				return
 			}
-			console.log('asdf')
+				console.log(window.localStorage.getItem("token"))
+			
 			auth.login(this.form.email, this.form.pass, loggedIn => {
-				if (!loggedIn) {
+				console.log(window.localStorage.getItem("token"))
+				if (!window.localStorage.getItem("token")) {
 					console.log(loggedIn)
 					this.error = true
 				} else {

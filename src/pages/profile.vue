@@ -1,107 +1,128 @@
 <template>
-  <q-page>
-  
-    <div class="row">
-      <div class="col-1">
-      </div>
-      <div class="col-10">
-  
-        <q-toolbar color="yellow" class="text-dark">
-          <q-btn flat round dense icon="assignment_ind" />
-          <q-toolbar-title>
-            Toolbar
-            <!-- <span slot="subtitle">Subtitle</span> -->
-          </q-toolbar-title>
-          <q-btn flat round dense icon="sim_card" />
-          <q-btn flat round dense icon="gamepad" />
-        </q-toolbar>
-      </div>
-      <div class="col-1">
-      </div>
-  
-    </div>
-  
-    <div class="row gutter-sm">
-      <div class="col-1">
-      </div>
-      <div class="col-2">
-        <!-- <img src="0.0.0.0:83/uploads/avatars/ash-downing.jpg" class="avatar img-thumbnail hidden-print"> -->
-        <img src="http://0.0.0.0:83/uploads/avatars/ash-downing.jpg" />
-  
-      </div>
-      <div class="col-6">
-        <q-list highlight>
-          <!-- <q-list-header>Recent chats</q-list-header> -->
-          <q-item>
-            <q-item-side label>(650) 555 - 1234 </q-item-side>
-            <q-item-main>
-              <q-item-tile label>(650) 555 - 1234</q-item-tile>
-              <!-- <q-item-tile sublabel>Mobile</q-item-tile> -->
-            </q-item-main>
-            <!-- <q-item-side right icon="chat_bubble" color="green" /> -->
-          </q-item>
-        </q-list>
-      </div>
-  
-      <div class="col-2 ">
-        <div q-list>
-          <q-btn color="primary" class="full-width" label="Full-width" />
-          <q-btn color="secondary" class="full-width" label="Full-width" />
-  
-          </q-list>
-        </div>
-        <div class="col-1">
-        </div>
-      </div>
-    </div>
-    </div>
-  
-  
-  
-  </q-page>
-</template>
+  <q-page padding class="row justify-center">
 
-<style>
-  
-</style>
+      <div v-if="okShow" style="width: 800px; max-width: 90vw;" >
+    
+
+      <q-tabs inverted color="secondary" align="justify">
+        <q-tab default name="mails" slot="title" icon="business" label="Basic Info" />
+        <q-tab name="alarms" slot="title" icon="devices other" label="Checked Assets" />
+        <q-tab name="movies" slot="title" icon="history" label="History" />
+
+        <q-tab-pane name="mails">
+                    <div class="row">  
+ <div class="col-md-3 col-lg-3 " >    
+                         <img src ="http://0.0.0.0:83/uploads/avatars/ash-downing.jpg" style="height: 160px;"> 
+                         </div>
+        <div class=" col-md-9 col-lg-9 "> 
+                  <q-list highlight>
+                      <q-item>
+                        <q-item-side label>Position:</q-item-side>
+                       <q-item-main>
+                        <q-item-tile>{{profile.basic.department}}</q-item-tile>
+                         </q-item-main>
+                      </q-item>
+                      <q-item>
+                        <q-item-side label>Hire date:</q-item-side>
+                       <q-item-main>
+                        
+                        <q-item-tile>{{profile.basic.hire_date}}</q-item-tile>
+                       </q-item-main>
+
+                      </q-item>
+                
+                        <q-item>
+                        <q-item-side label>Home Address:</q-item-side>
+               <q-item-main>
+                 {{profile.detail.address}}
+                 <br>{{profile.detail.city}}
+                 <br> {{profile.detail.country}}
+                 </q-item-main>  
+                      </q-item>
+                      <q-item>
+                        <q-item-side label>Email:</q-item-side>
+                        <q-item-main><a href="mailto:"profile.email>{{profile.basic.email}}</a></q-item-main>
+                      </q-item>
+                      <q-item>
+                        <q-item-side label>Phone Number:</q-item-side>
+                        <q-item-main>{{profile.detail.phone}}
+                        </q-item-main>
+                      </q-item>
+                     
+                  </q-list>
+                
+                </div>
+                    </div>
+        </q-tab-pane>
+        <q-tab-pane name="alarms">Checked Assets</q-tab-pane>
+        <q-tab-pane name="movies">History</q-tab-pane>
+      </q-tabs>
+      </div>
+    </div>
+    
+</q-page>
+    </template>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
 
 <script>
+import auth from '../utils/auth'
+import store from '../store'
   export default {
     name: "Profile",
     data: () => ({
-      tableData: []
+      profile: null,
+      okShow: false,
+      errors: []
     }),
-    async created() {
-      try {
-        const response = await axios.get(
-          `http://jsonplaceholder.typicode.com/posts`
-        );
-        this.posts = response.data;
-      } catch (e) {
-        this.errors.push(e);
+    mounted() {
+      if(window.localStorage.getItem('token')){
+        this.getUserProfile()
+      }else{
+        router.push({ path: "login" })
       }
-    }
+    },
+     methods: {
+        getUserProfile() {
+          try{
+	auth.getProfile( _profile => {
+    console.log('error test')
+				if (!_profile) {
+					console.log(_profile)
+					this.error = true
+				} else {
+          console.log(_profile)
+          this.profile = _profile
+          this.okShow = true
+				}
+			})
+}catch (error){
+  console.log(error)
+}
+        }
+     }
+
   };
 </script>
 
-<style lang="stylus">
-.docs-btn {
-  .q-btn {
-margin: 5px;
-  }
-
-  .btn-fixed-width {
-    width: 200px;
-  }
+<style scoped>
+img.avatar {
+    width: 150px;
+    height:150px;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 1px 1px rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12);
+    vertical-align: middle;
 }
+.panel-heading {
+  background: #8fbcbb
+}
+.panel-footer {
+  background: #ffffff
+}
+.q-item-side {
+  width: 120px;
+  color: #8fbcbb;
+}
+
 </style>
-// Name
-// Username
-// Groups
-// Job
-// Employee No.
-// Manager
-// Email
-// Phone
-// Location
-// Created at

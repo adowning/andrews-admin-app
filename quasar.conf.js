@@ -2,7 +2,7 @@
 
 module.exports = function(ctx) {
   return {
-    plugins: ["axios", "vuelidate"],
+    plugins: ["axios", "vuelidate", "dotenv"],
     css: ["app.styl"],
     extras: [
       ctx.theme.mat ? "roboto-font" : null,
@@ -34,7 +34,7 @@ module.exports = function(ctx) {
       proxy: {
         // proxy all requests starting with /api to jsonplaceholder
         "/api": {
-          target: "http://47.219.112.177:3001",
+          target: "http://23.236.60.103",
           changeOrigin: true,
           pathRewrite: {
             "^/api": "",
