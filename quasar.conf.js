@@ -2,7 +2,7 @@
 
 module.exports = function(ctx) {
   return {
-    plugins: ["axios", "vuelidate", "dotenv"],
+    plugins: ["axios", "vuelidate", "vue2-google-maps", "vue-mqtt"],
     css: ["app.styl"],
     extras: [
       ctx.theme.mat ? "roboto-font" : null,

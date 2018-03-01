@@ -32,17 +32,24 @@
 </template>
 
 <script>
+//8fca92a4a5276109256648f2d9fc0dda23187c21
+//4fc5583b5f14f6f999b4d5b071e708b52be23467
+
 import { required, email } from "vuelidate/lib/validators"
 import { Notify } from "quasar"
 import auth from "../utils/auth"
 import router from "../router"
+const querystring = require('querystring');
+
 export default {
 	data() {
 		return {
 			form: {
-				email: "ashdowning@gmail.com",
+				email: "ash@andrewscarpetcleaning.com",
 				pass: "asdfasdf",
 			},
+			errors: [],
+			error: false
 		}
 	},
 	validations: {
@@ -60,22 +67,55 @@ export default {
 				debugger
 				return
 			}
-				console.log(window.localStorage.getItem("token"))
-			
-			auth.login(this.form.email, this.form.pass, loggedIn => {
-				console.log(window.localStorage.getItem("token"))
-				if (!window.localStorage.getItem("token")) {
-					console.log(loggedIn)
-					this.error = true
-				} else {
-					console.log(loggedIn)
-					router.push({ path: "profile" })
+    var data =
+    {
+        email: this.form.email,
+        password: this.form.pass,
+        remember_me: true
+	}
+	var vm = this
+	    localStorage.clear();
 
-					// this.$router.replace(
-					// 	this.$route.query.redirect || "/profile",
-					// )
-				}
-			})
+	 this.$axios.post("http://47.219.112.177/api/v2/user/session", querystring.stringify(data))
+    .then(response => {
+		window.localStorage.setItem('token',response.data.session_token);
+		console.log(response.data.email)
+		window.localStorage.setItem('loginEmail',response.data.email);
+	
+		 return this.$api.get(`/db/_table/Contact/`)
+	}).then((response) => {
+			let info = _.find(response.data.resource, function(o) { return o.email = window.localStorage.getItem('loginEmail') })
+      // window.localStorage.setItem('userInfo',querystring.stringify(info))
+      window.localStorage.setItem('userInfo', JSON.stringify(info))
+      console.log(info)
+			window.localStorage.setItem('id',JSON.stringify(info.id ))
+		 return this.$api.get(`/db/_table/contact_info/`+ window.localStorage.getItem("id"))
+	}).then((response) => {
+			let _profile = response.data
+			window.localStorage.setItem('profile', JSON.stringify(_profile))
+			window.localStorage.setItem('image', "http://192.168.1.171/api/v2/files/aaa/employee_images/"+window.localStorage.getItem("id")+".jpg?api_key=b5cb82af7b5d4130f36149f90aa2746782e59a872ac70454ac188743cb55b0ba&session_token="+window.localStorage.getItem('token'))
+				console.log('going ')
+		 vm.$router.push({ path: "profile" })
+	})
+    .catch(e => {
+      console.log('error found logging out from login', e)
+      // this.errors.push(e)
+     console.log('errror -=  ', e)
+    })
+	
+	//  this.$axios.post("http://23.236.60.103/api/v2/user/session", querystring.stringify(data))
+  //   .then(response => {
+	// 	window.localStorage.setItem('token',response.data.session_token);
+	// 	console.log(response.data.email)
+	// 	window.localStorage.setItem('loginEmail',response.data.email);
+	// 	console.log('going ')
+  //    router.push({ path: "profile" })
+	// })
+  //   .catch(e => {
+  //     console.log('error found logging out from login', e)
+  //     this.errors.push(e)
+  //     this.logOut()
+  //   })
 		},
 	},
 	directives: {
@@ -91,6 +131,6 @@ export default {
 
 <style>
 .error {
-	color: red;
+  color: red;
 }
 </style>

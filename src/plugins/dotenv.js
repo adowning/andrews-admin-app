@@ -1,5 +1,5 @@
-import dotenv from "dotenv"
+// import dotenv from "dotenv"
 
-export default ({ Vue }) => {
-  Vue.use(dotenv)
-}
+// export default ({ Vue }) => {
+//   Vue.use(dotenv)
+// }

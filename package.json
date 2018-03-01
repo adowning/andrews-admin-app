@@ -12,12 +12,13 @@
   "dependencies": {
     "accounting": "^0.4.1",
     "axios": "^0.17.1",
-    "dotenv": "^5.0.0",
     "lodash": "^4.17.5",
     "moment": "^2.20.1",
     "vue-events": "^3.1.0",
     "vue-frame": "^1.0.6",
+    "vue-mqtt": "^2.0.2",
     "vue-select": "^2.4.0",
+    "vue2-google-maps": "^0.8.8",
     "vuelidate": "^0.6.2",
     "vuetable-2": "^1.7.2"
   },

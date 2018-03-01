@@ -6,30 +6,47 @@ export default ({ Vue }) => {
   Vue.prototype.$axios = axios;
 
   var api = axios.create({
-    baseURL: "http://23.236.60.103",
+    baseURL: "http://47.219.112.177/api/v2",
     timeout: 3000,
     headers: {
       "X-DreamFactory-API-Key":
-        "867b722bfd2e45b460a97815b8b94f58924120bdfef26b56eec32732bb9e40f0",
-      "X-DreamFactory-Session-Token": window.localStorage.token
+        "ee939e032dba64c6fa98f46ddb46a9bf0727effb1b8a342a7198224137d5ad8d",
+      "X-DreamFactory-Session-Token": window.localStorage.getItem('token'),
+      remember_me: true
     }
-  });
+  })
+  api.interceptors.request.use(
+    config => {
+      let _headers = {
+        "X-DreamFactory-API-Key":
+        "ee939e032dba64c6fa98f46ddb46a9bf0727effb1b8a342a7198224137d5ad8d",
+      "X-DreamFactory-Session-Token": window.localStorage.getItem('token')
+      }
+      config.headers = _headers
+      return config;
+    },
+    error => Promise.reject(error)
+  )
 
   api.interceptors.response.use(
     response => response,
     error => {
+    console.log('interceptor initiated')      
       if (error.response) {
+        if (error.response.status === 500) {
+          console.log(error.response.data.error.message)
+          Notify.create("Server Errror: "+ error.response.data.error.message);
+          //TODO get a token and do it from here
+        }
         if (error.response.status === 401) {
-          // dispatch('logOut');
-          Notify.create("Your session has timed out");
-          localStorage.clear();
-          router.push({ path: "login" });
-          return error;
+          Notify.create("Session expired, need to log back in");
+          //TODO get a token and do it from here
+		 router.push({ path: "login" })
         } else return Promise.reject(error.response);
       } else if (error.request) notify("Server down");
       else Notify.create("Unexpected error");
     }
-  );
+  )
 
   Vue.prototype.$api = api;
 };

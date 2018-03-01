@@ -24,7 +24,7 @@ export default [
     component: DefaultLayout,
     beforeEnter: requireAuth,
     children: [
-      { path: "/", component: Dashboard, beforeEnter: requireAuth },
+      { path: "/dashboard", component: Dashboard, beforeEnter: requireAuth },
 
       { path: "/liveview", component: LiveView, beforeEnter: requireAuth },
       { path: "/workshop", component: WorkShop, beforeEnter: requireAuth },
@@ -51,14 +51,15 @@ export default [
   },
 ]
 function requireAuth(to, from, next) {
-  console.log(auth.loggedIn())
-  if (!window.localStorage.getItem("token")) {
-    next({
-      path: "/login",
-      query: { redirect: to.fullPath },
-    })
-  } else {
-    next()
-  }
+  // console.log(window.localStorage.getItem("token"))
+  next()
+  // if (!window.localStorage.getItem("token")) {
+  //   next({
+  //     path: "/login",
+  //     query: { redirect: to.fullPath },
+  //   })
+  // } else {
+  //   next()
+  // }
 }
 

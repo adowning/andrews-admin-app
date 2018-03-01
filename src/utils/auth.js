@@ -1,30 +1,27 @@
 /* globals localStorage */
-import axios from "axios"
+import axios from 'axios'
 import { Cookies } from "quasar"
 import  assets  from "../utils/assets"
-import dotenv from "dotenv"
 var _ = require('lodash');
 import { Notify } from 'quasar'
 import router from '../router'
-
-var apiBase = axios.create({
+import Vue from 'vue'
+const apiBase = axios.create({
     baseURL: 'http://23.236.60.103',
     timeout: 3000,
     headers: {
       "X-DreamFactory-API-Key": '867b722bfd2e45b460a97815b8b94f58924120bdfef26b56eec32732bb9e40f0',
       "X-DreamFactory-Session-Token": window.localStorage.getItem('token'),
       remember_me: true
-
-
   },
-  
   })
 
 var querystring = require('querystring');
 
 export default {
   login(email, pass, cb) {
-    cb = arguments[arguments.length - 1]
+    // console.log(arguments[arguments.length -1])
+    // cb = arguments[arguments.length - 1]
     if (window.localStorage.getItem('token')) {
       if (cb) cb(true)
       this.onChange(true)
@@ -37,10 +34,8 @@ export default {
         remember_me: false
     }
     async function getJSONAsync() {
-      console.log(data)
-      console.log(axios.get('http://23.236.60.103/api/v2/system/environment'))
-      
-      let json = await axios.post("http://23.236.60.103/api/v2/user/session", querystring.stringify(data))
+      // console.log(axios.get('http://23.236.60.103/api/v2/system/environment'))
+      let json = await apiBase.post("/api/v2/user/session", querystring.stringify(data))
       return json
     }
     getJSONAsync().then(function (result) {
@@ -48,35 +43,35 @@ export default {
         window.localStorage.setItem('token',result.data.session_token);
       cb(result)
       }else{
-        cb(result)
+        this.logOut()
+        // cb(result)
 
       }
       
     });
   },
 
-  getProfile(cb) {
-    var profile = {}    
-    async function getJSONAsync() {
-      var profile = {}
-      let json = await apiBase.get("/api/v2/db/_table/Contact/")
-      var id = _.findIndex(json.data.resource, function(o) { return o.first_name == 'Ash', o.last_name == 'Downing' })
-      profile.id = id
-      profile.basic = json.data.resource[id]
-      let json2 = await apiBase.get("/api/v2/db/_table/contact_info/"+profile.id)
-      profile.detail = json2.data
-    return profile
-    }
-     getJSONAsync().then(function (result) {
-       console.log(result)
-      cb(result)
-      })
-  },
+  // getProfile(cb) {
+  //   var profile = {}    
+  //   async function getJSONAsync() {
+  //     var profile = {}
+  //     let json = await apiBase.get("/api/v2/db/_table/Contact/")
+  //     var id = _.find(json.data.resource, function(o) { return o.email == window.localStorage.getItem('loginEmail') })
+  //     profile.id = id
+  //     profile.basic = json.data.resource[id]
+  //     let json2 = await apiBase.get("/api/v2/db/_table/contact_info/"+profile.id)
+  //     profile.detail = json2.data
+  //   return profile
+  //   }
+  //    getJSONAsync().then(function (result) {
+  //     cb(result)
+  //     })
+  // },
 
   logOut(cb) {
     if (cb) cb()
     this.onChange(false)
-    Notify.create("You have been logged out");
+    Notify.create("You have been logged out from auth")
     localStorage.clear();
     router.push({ path: "login" })
     

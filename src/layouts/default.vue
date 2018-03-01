@@ -15,25 +15,25 @@
           Andrews Group
           <!-- <div slot="subtitle">Administration Application v0.0.1</div> -->
         </q-toolbar-title>
-                <q-btn flat round dense icon="exit to app" label="Logout" @click="logOut()"></q-btn>
+        <q-search inverted v-model="search" color="none" class="q-mr-xl" />
+                <q-btn flat round dense icon="exit to app" label="Logout" @click="logOut()">{{userInfo.first_name}}</q-btn>
       </q-toolbar>
     </q-layout-header>
 
     <q-layout-drawer
       v-model="leftDrawerOpen"
       content-class="bg-grey-2"
-      
     >
      <div id="profile">
        <div row>
-   <img src ="http://0.0.0.0:83/uploads/avatars/ash-downing.jpg" class="avatar img-thumbnail hidden-print inline-block" >
+   <img v-bind:src="imageURL" class="avatar img-thumbnail hidden-print inline-block" >
       <!--img src="../img/avatar-1.svg" id="avatar" class="inline-block"--> 
        
        </div>
        
       <!-- <div row> -->
            <div id="user-name">
-        <span > Ash Downing </span>
+        <span > {{userInfo.first_name}}</span>
         <hr>
         <span style="color: green"> Online </span>
         <hr>
@@ -45,6 +45,10 @@
       <q-item to="/liveview"  >
         <q-item-side icon="local shipping" />
         <q-item-main label="Live View"  />
+      </q-item>
+       <q-item to="/dashboard"  >
+        <q-item-side icon="local shipping" />
+        <q-item-main label="Dashboard"  />
       </q-item>
   <q-collapsible indent icon="devices other" label="Assets" >
       
@@ -88,12 +92,12 @@
       <router-view />
     </q-page-container>
 
-    <q-layout-footer v-model="footer" >
+    <q-layout-footer v-model="footer"  >
      
-      <q-toolbar :inverted="$q.theme === 'ios'">
+      <q-toolbar :inverted="$q.theme === 'ios'" style="background-color: #31CCEC !important; color:#4c566a;">
         
         <q-toolbar-title class="q-caption">
-          "If you can't measure it, you can't improve it."    
+          "If you can't measure it, you can't improve it."    Debug info: {{route}}
         </q-toolbar-title>
        
       </q-toolbar>
@@ -103,20 +107,52 @@
 
 <script>
 import { openURL } from "quasar";
-import auth from '../utils/auth'
+// import auth from '../utils/auth'
+import router from '../router'
+import { Notify } from 'quasar'
+const querystring = require('querystring');
+
 export default {
   name: "LayoutDefault",
   data() {
     return {
       leftDrawerOpen: false,
-      footer: true
+      footer: true,
+      loggedIn: {},
+      userInfo: {},
+      route: "",
+      imageURL: "",
+      search: {},
+      errors: []
     };
+  },
+  watch: {
+    errors:  function (val){
+      console.log('errors happened', val)
+        // router.push({ path: "login" })
+        this.logOut()
+    }
+  },
+   created() {
+    console.log(window.localStorage.getItem('loginEmail'))
+    // this.route = this.$router.fullPath
+    console.log(this.$router.path)
+    if(!window.localStorage.getItem('loginEmail')  || window.localStorage.getItem('loginEmail') == 'undefined'){
+          // router.push({ path: "login" })
+        this.logOut()          
+    }
+    this.imageURL = window.localStorage.getItem('image')
+    this.userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
   },
   methods: {
     openURL,
-    logOut(){
-        auth.logOut()
-    }
+     logOut() {
+    
+    Notify.create("You have been logged out");
+    localStorage.clear();
+    router.push({ path: "login" })
+    
+  },
   }
 };
 </script>
@@ -126,7 +162,12 @@ export default {
 footer {
   height: 30px !important;
   text-align: left;
+  color: #000000 !important;
+  background-color: #31CCEC !important
 }
+/* .q-toolbar{
+  background-color: #31CCEC !important
+} */
 #profile {
   padding-top: 20px !important;
   height: 130px !important;
@@ -159,7 +200,7 @@ img.avatar {
     vertical-align: middle;
 }
 .q-layout-footer {
-  background-color: #F2C037 !important
+  background-color: #31CCEC !important
   
 }
 </style>

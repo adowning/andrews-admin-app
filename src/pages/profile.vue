@@ -12,21 +12,22 @@
         <q-tab-pane name="mails">
                     <div class="row">  
  <div class="col-md-3 col-lg-3 " >    
-                         <img src ="http://0.0.0.0:83/uploads/avatars/ash-downing.jpg" style="height: 160px;"> 
+                         <img v-bind:src="imageURL" style="height: 160px;"> 
+                  
                          </div>
         <div class=" col-md-9 col-lg-9 "> 
                   <q-list highlight>
                       <q-item>
                         <q-item-side label>Position:</q-item-side>
                        <q-item-main>
-                        <q-item-tile>{{profile.basic.department}}</q-item-tile>
+                        <q-item-tile>{{userInfo.department}}</q-item-tile>
                          </q-item-main>
                       </q-item>
                       <q-item>
                         <q-item-side label>Hire date:</q-item-side>
                        <q-item-main>
                         
-                        <q-item-tile>{{profile.basic.hire_date}}</q-item-tile>
+                        <q-item-tile>{{userInfo.hire_date}}</q-item-tile>
                        </q-item-main>
 
                       </q-item>
@@ -34,18 +35,18 @@
                         <q-item>
                         <q-item-side label>Home Address:</q-item-side>
                <q-item-main>
-                 {{profile.detail.address}}
-                 <br>{{profile.detail.city}}
-                 <br> {{profile.detail.country}}
+                 {{profile.address}}
+                 <br>{{profile.city}}
+                 <br> {{profile.country}}
                  </q-item-main>  
                       </q-item>
                       <q-item>
                         <q-item-side label>Email:</q-item-side>
-                        <q-item-main><a href="mailto:"profile.email>{{profile.basic.email}}</a></q-item-main>
+                        <q-item-main><a href="mailto:"profile.email>{{profile.email}}</a></q-item-main>
                       </q-item>
                       <q-item>
                         <q-item-side label>Phone Number:</q-item-side>
-                        <q-item-main>{{profile.detail.phone}}
+                        <q-item-main>{{profile.phone}}
                         </q-item-main>
                       </q-item>
                      
@@ -62,67 +63,78 @@
     
 </q-page>
     </template>
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js">
+</script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js">
+</script>
 
 
 <script>
-import auth from '../utils/auth'
-import store from '../store'
-  export default {
-    name: "Profile",
-    data: () => ({
-      profile: null,
-      okShow: false,
-      errors: []
-    }),
-    mounted() {
-      if(window.localStorage.getItem('token')){
-        this.getUserProfile()
-      }else{
-        router.push({ path: "login" })
-      }
-    },
-     methods: {
-        getUserProfile() {
-          try{
-	auth.getProfile( _profile => {
-    console.log('error test')
-				if (!_profile) {
-					console.log(_profile)
-					this.error = true
-				} else {
-          console.log(_profile)
-          this.profile = _profile
-          this.okShow = true
-				}
-			})
-}catch (error){
-  console.log(error)
-}
-        }
-     }
+import auth from "../utils/auth";
+import store from "../store";
 
-  };
+export default {
+  name: "Profile",
+  data: () => ({
+    profile: {},
+    userInfo: {},
+    imageURL: "",
+    okShow: false,
+    errors: []
+  }),
+  created() {
+    //if(window.localStorage.getItem('token')){
+    this.getUserProfile();
+    // }else{
+    //  router.push({ path: "login" })
+    //  }
+  },
+  methods: {
+
+    getUserProfile() {
+    if(window.localStorage.getItem("userInfo")){
+      this.profile = JSON.parse(window.localStorage.getItem("profile"))
+      this.imageURL = window.localStorage.getItem("image")
+      this.userInfo = JSON.parse(window.localStorage.getItem("userInfo"))
+      this.okShow = true
+
+    }
+    }
+
+    // getUserProfile() {
+    //   console.log(window.localStorage.getItem("id"))
+    //   this.$api.get(`/db/_table/contact_info/`+ window.localStorage.getItem("id"))
+    //     .then(response => {
+         
+    //       this.profile = response.data.resource
+    //       this.okShow = true
+    //     })
+    //     .catch(e => {
+    //       console.log("gots an error", e);
+    //       this.errors.push(e);
+    //     })
+    // }
+  }
+};
 </script>
 
 <style scoped>
 img.avatar {
-    width: 150px;
-    height:150px;
-    border-radius: 50%;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 1px 1px rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12);
-    vertical-align: middle;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.14),
+    0 2px 1px -1px rgba(0, 0, 0, 0.12);
+  vertical-align: middle;
 }
 .panel-heading {
-  background: #8fbcbb
+  background: #8fbcbb;
 }
 .panel-footer {
-  background: #ffffff
+  background: #ffffff;
 }
 .q-item-side {
   width: 120px;
   color: #8fbcbb;
 }
-
 </style>

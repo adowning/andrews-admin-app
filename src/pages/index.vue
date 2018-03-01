@@ -1,14 +1,30 @@
 <template>
   <q-page class="flex flex-center">
-    <img src="~assets/quasar-logo-full.svg">
+
+  <div data-netdata="cgroup_myniggah_dreamfactory_1.net_packets_eth0" data-width="300"
+     data-height="100"></div>
   </q-page>
 </template>
 
-<style>
-</style>
-
 <script>
 export default {
-  name: 'PageIndex'
+  data: () => ({
+   
+  }),
+  // created() {
+  //   let dashboard = document.createElement('script')
+  //   dashboard.setAttribute('src', 'http://47.219.112.177:19999/dashboard.js')
+  //   document.head.appendChild(dashboard)
+  // },
+  methods: {
+    
+  }
 }
 </script>
+
+
+<style>
+.q-page{
+  background-color: #4c566a
+}
+</style>
