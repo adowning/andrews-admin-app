@@ -1,5 +1,6 @@
 <template>
   <q-layout view="lHh Lpr fFf">
+    <!-- <div @once="logOut">asdf</div> -->
     <q-layout-header>
       <q-toolbar color="primary">
         <q-btn
@@ -26,13 +27,13 @@
     >
      <div id="profile">
        <div row>
-   <img v-bind:src="imageURL" class="avatar img-thumbnail hidden-print inline-block" >
+   <img v-bind:src="imageURL" @error='logOut("Session expired")' class="avatar img-thumbnail hidden-print inline-block" >
       <!--img src="../img/avatar-1.svg" id="avatar" class="inline-block"--> 
        
        </div>
        
       <!-- <div row> -->
-           <div id="user-name">
+           <div id="user-name" v-bind:name="first_name" @error='logOut("Session expired")'>
         <span > {{userInfo.first_name}}</span>
         <hr>
         <span style="color: green"> Online </span>
@@ -97,7 +98,7 @@
       <q-toolbar :inverted="$q.theme === 'ios'" style="background-color: #31CCEC !important; color:#4c566a;">
         
         <q-toolbar-title class="q-caption">
-          "If you can't measure it, you can't improve it."    Debug info: {{route}}
+          "If you can't measure it, you can't improve it."    Debug info: {{thisRoute}}
         </q-toolbar-title>
        
       </q-toolbar>
@@ -108,10 +109,9 @@
 <script>
 import { openURL } from "quasar";
 // import auth from '../utils/auth'
-import router from '../router'
+import _router from '../router'
 import { Notify } from 'quasar'
 const querystring = require('querystring');
-
 export default {
   name: "LayoutDefault",
   data() {
@@ -121,36 +121,44 @@ export default {
       loggedIn: {},
       userInfo: {},
       route: "",
+      first_name: "",
       imageURL: "",
-      search: {},
-      errors: []
+      search: "",
+      errors: [],
+      thisRoute: "",
     };
   },
   watch: {
     errors:  function (val){
       console.log('errors happened', val)
         // router.push({ path: "login" })
-        this.logOut()
+        this.logOut(val)
     }
   },
+  mounted(){
+    //  this.$once(this.logOut())
+console.log(this.$router.history.current.fullPath)
+    this.thisRoute = this.$router.history.current.fullPath
+  },
    created() {
-    console.log(window.localStorage.getItem('loginEmail'))
-    // this.route = this.$router.fullPath
-    console.log(this.$router.path)
+  
     if(!window.localStorage.getItem('loginEmail')  || window.localStorage.getItem('loginEmail') == 'undefined'){
           // router.push({ path: "login" })
-        this.logOut()          
+        this.logOut("Session timed out")    
+        return      
     }
+
     this.imageURL = window.localStorage.getItem('image')
+     
     this.userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
   },
   methods: {
     openURL,
-     logOut() {
-    
-    Notify.create("You have been logged out");
-    localStorage.clear();
-    router.push({ path: "login" })
+     logOut(reason) {
+    if(reason){
+    Notify.create(reason)
+    }
+    this.$router.push({ path: "login" })
     
   },
   }

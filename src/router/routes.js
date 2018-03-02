@@ -8,6 +8,7 @@ import LiveView from "pages/liveview"
 import Hardware from "../pages/hardware/"
 import WorkShop from "pages/workshop"
 import Consumables from "pages/consumables"
+import Groups from "pages/groups"
 import Directory from "pages/directory"
 import Applicants from "pages/applicants"
 import Profile from "pages/profile"
@@ -20,7 +21,7 @@ export default [
     component: Login,
   },
   {
-    path: "/",
+    path: "/dashboard",
     component: DefaultLayout,
     beforeEnter: requireAuth,
     children: [
@@ -36,6 +37,11 @@ export default [
         component: Consumables,
         beforeEnter: requireAuth,
       },
+      {
+        path: "/groups",
+        component: Groups,
+        beforeEnter: requireAuth,
+      },
       { path: "/directory", component: Directory, beforeEnter: requireAuth },
       { path: "/applicants", component: Directory, beforeEnter: requireAuth },
 
@@ -46,12 +52,17 @@ export default [
   },
   {
     // Always leave this as last one
-    path: "*",
-    component: () => import("pages/404"),
+    path: "/",
+    // component: () => import("pages/404"),
+    component: Login,
+    
   },
 ]
 function requireAuth(to, from, next) {
   // console.log(window.localStorage.getItem("token"))
+  console.log(to)
+  console.log(from)
+  console.log(next)
   next()
   // if (!window.localStorage.getItem("token")) {
   //   next({

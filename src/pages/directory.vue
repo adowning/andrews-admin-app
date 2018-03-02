@@ -5,11 +5,11 @@
     :columns="columns"
     :filter="filter"
     row-key="name"
-    dark=true
     color="primary"
     :pagination.sync="serverPagination"
     :loading="loading"
     @request="request"
+    syle="color: #fff;"
   >
     <template slot="top-selection" slot-scope="props">
     <q-btn color="secondary" flat label="Action 1" class="q-mr-sm" />
@@ -38,14 +38,7 @@ export default {
 
       serverData: [],
       columns: [
-        {
-          name: 'first_name',
-          // required: true,
-          label: 'Name',
-          align: 'left',
-          field: 'first_name',
-          sortable: true
-        },
+       
         // { name: 'last_name', label: 'Last Name', field: 'last_name', sortable: true },
         // { name: 'email', label: 'Email', field: 'email', sortable: true },
         // { name: 'department', label: 'Department', field: 'department' },     
@@ -100,3 +93,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+q-table{
+  color: #fff !important;
+}
+
+</style>

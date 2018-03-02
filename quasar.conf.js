@@ -2,7 +2,8 @@
 
 module.exports = function(ctx) {
   return {
-    plugins: ["axios", "vuelidate", "vue2-google-maps", "vue-mqtt"],
+    // plugins: ["axios", "vuelidate", "vue2-google-maps",  "dotenv"],
+    plugins: ["axios", "vuelidate"],
     css: ["app.styl"],
     extras: [
       ctx.theme.mat ? "roboto-font" : null,
@@ -16,6 +17,7 @@ module.exports = function(ctx) {
       add: [],
       remove: [],
     },
+
     build: {
       scopeHoisting: true,
       vueRouterMode: "history",
@@ -25,7 +27,19 @@ module.exports = function(ctx) {
       // useNotifier: false,
       devTool: "source-map",
       sourceMap: true,
-      extendWebpack(cfg) {},
+      extendWebpack(cfg) {
+        cfg.module.rules.push({
+          enforce: 'pre',
+          test: /\.js$/,
+          // loader: 'json-loader'
+          // test: /\.(js|mqtt)$/,
+
+        //  test: /node_modules[/\\]mqtt/i,
+          loader: 'shebang-loader',
+          //exclude: /(node_modules|quasar)/
+        })
+
+      },
     },
     devServer: {
       // https: true,
@@ -33,13 +47,13 @@ module.exports = function(ctx) {
       open: true, // opens browser window automatically
       proxy: {
         // proxy all requests starting with /api to jsonplaceholder
-        "/api": {
-          target: "http://23.236.60.103",
-          changeOrigin: true,
-          pathRewrite: {
-            "^/api": "",
-          },
-        },
+        // "/api": {
+        //   target: "http://47.219.112.177",
+        //   changeOrigin: true,
+        //   pathRewrite: {
+        //     "^/api": "",
+        //   },
+        // },
       },
     },
     framework: "all",
@@ -114,6 +128,7 @@ module.exports = function(ctx) {
     electron: {
       extendWebpack(cfg) {
         // do something with cfg
+ 
       },
       packager: {
         // OS X / Mac App Store

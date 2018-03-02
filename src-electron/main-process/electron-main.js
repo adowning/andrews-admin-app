@@ -1,5 +1,11 @@
 import { app, BrowserWindow } from "electron"
+// import { autoUpdater } from "electron-updater"
+var log = require('electron-log');
+log.info('Hello, log');
+// autoUpdater.logger = require("electron-log")
+// autoUpdater.logger.transports.file.level = "info"
 
+// autoUpdater.checkForUpdatesAndNotify()
 /**
  * Set `__statics` path to static files in production;
  * The reason we are setting it here is that the path needs to be evaluated at runtime
@@ -21,7 +27,7 @@ function createWindow() {
     height: 900,
     webPreferences: { webSecurity: false },
     allowRunningInsecureContent: true,
-    useContentSize: true,
+    useContentSize: false,//
   })
 
   mainWindow.loadURL(process.env.APP_URL)

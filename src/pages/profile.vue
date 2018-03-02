@@ -83,6 +83,7 @@ export default {
     errors: []
   }),
   created() {
+    console.log('loaded profile')
     //if(window.localStorage.getItem('token')){
     this.getUserProfile();
     // }else{
@@ -97,23 +98,9 @@ export default {
       this.imageURL = window.localStorage.getItem("image")
       this.userInfo = JSON.parse(window.localStorage.getItem("userInfo"))
       this.okShow = true
-
+console.log(this.okShow)
     }
     }
-
-    // getUserProfile() {
-    //   console.log(window.localStorage.getItem("id"))
-    //   this.$api.get(`/db/_table/contact_info/`+ window.localStorage.getItem("id"))
-    //     .then(response => {
-         
-    //       this.profile = response.data.resource
-    //       this.okShow = true
-    //     })
-    //     .catch(e => {
-    //       console.log("gots an error", e);
-    //       this.errors.push(e);
-    //     })
-    // }
   }
 };
 </script>

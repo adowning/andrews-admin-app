@@ -3,6 +3,27 @@ const localStorage = window.localStorage;
 import {Notify} from "quasar"
 import router from '../router'
 export default ({ Vue }) => {
+
+
+  axios.interceptors.response.use(
+    response => response,
+    error => {
+    console.log('interceptor initiated')      
+    //   if (error.response) {
+    //     if (error.response.status === 500) {
+    //       console.log(error.response.data.error.message)
+    //       Notify.create("Server Errror: "+ error.response.data.error.message);
+    //       //TODO get a token and do it from here
+    //     }
+    //     if (error.response.status === 401) {
+    //       Notify.create("Session expired, need to log back in");
+    //       //TODO get a token and do it from here
+		//  router.push({ path: "login" })
+    //     } else return Promise.reject(error.response);
+    //   } else if (error.request) notify("Server down");
+    //   else Notify.create("Unexpected error");
+    }
+  )
   Vue.prototype.$axios = axios;
 
   var api = axios.create({
