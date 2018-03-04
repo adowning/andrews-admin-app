@@ -14,6 +14,7 @@ import Applicants from "pages/applicants"
 import Profile from "pages/profile"
 import Documents from "pages/documents"
 import Logs from "pages/logs"
+import AuthGuard from './auth-guard'
 
 export default [
   {
@@ -21,11 +22,11 @@ export default [
     component: Login,
   },
   {
-    path: "/dashboard",
+    path: "/",
     component: DefaultLayout,
     beforeEnter: requireAuth,
     children: [
-      { path: "/dashboard", component: Dashboard, beforeEnter: requireAuth },
+      { path: "/dashboard", component: Dashboard, beforeEnter: AuthGuard },
 
       { path: "/liveview", component: LiveView, beforeEnter: requireAuth },
       { path: "/workshop", component: WorkShop, beforeEnter: requireAuth },
@@ -45,24 +46,24 @@ export default [
       { path: "/directory", component: Directory, beforeEnter: requireAuth },
       { path: "/applicants", component: Directory, beforeEnter: requireAuth },
 
-      { path: "/profile", component: Profile, beforeEnter: requireAuth },
+      { path: "/profile", component: Profile, beforeEnter: AuthGuard },
       { path: "/documents", component: Documents, beforeEnter: requireAuth },
       { path: "/logs", component: Logs, beforeEnter: requireAuth },
     ],
   },
   {
     // Always leave this as last one
-    path: "/",
-    // component: () => import("pages/404"),
-    component: Login,
+    path: "*",
+    component: () => import("pages/404"),
+    // component: Login,
     
   },
 ]
 function requireAuth(to, from, next) {
   // console.log(window.localStorage.getItem("token"))
-  console.log(to)
-  console.log(from)
-  console.log(next)
+  // console.log(to)
+  // console.log(from)
+  // console.log(next)
   next()
   // if (!window.localStorage.getItem("token")) {
   //   next({

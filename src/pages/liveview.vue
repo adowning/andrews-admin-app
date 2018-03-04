@@ -141,7 +141,7 @@ export default {
       this.markers.push(marker);
       this.map.fitBounds(this.bounds.extend(position));
     });
-    var _client = mqtt.connect("mqtt://47.219.112.177:9001");
+    // var _client = mqtt.connect("mqtt://47.219.112.177:9001");
 
     _client.on("connect", function() {
       _client.subscribe("presence");

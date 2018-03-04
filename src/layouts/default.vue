@@ -17,7 +17,8 @@
           <!-- <div slot="subtitle">Administration Application v0.0.1</div> -->
         </q-toolbar-title>
         <q-search inverted v-model="search" color="none" class="q-mr-xl" />
-                <q-btn flat round dense icon="exit to app" label="Logout" @click="logOut()">{{userInfo.first_name}}</q-btn>
+                <q-btn flat round dense icon="exit to app" label="Logout" @click="logOut()"></q-btn>
+                <span>{{user.username}}</span>
       </q-toolbar>
     </q-layout-header>
 
@@ -27,14 +28,16 @@
     >
      <div id="profile">
        <div row>
-   <img v-bind:src="imageURL" @error='logOut("Session expired")' class="avatar img-thumbnail hidden-print inline-block" >
+  <img :src="user.photoURL" class="avatar img-thumbnail hidden-print inline-block" > 
       <!--img src="../img/avatar-1.svg" id="avatar" class="inline-block"--> 
        
        </div>
        
       <!-- <div row> -->
-           <div id="user-name" v-bind:name="first_name" @error='logOut("Session expired")'>
-        <span > {{userInfo.first_name}}</span>
+           <!-- <div id="user-name" v-bind:name="first_name" @error='logOut("Session expired")'> -->
+        <!-- <span > {{userInfo.first_name}}</span> -->
+        <span > {{user.username}}</span>
+        <!-- <span > {{userIsAuthenticated}}</span> -->
         <hr>
         <span style="color: green"> Online </span>
         <hr>
@@ -126,34 +129,58 @@ export default {
       search: "",
       errors: [],
       thisRoute: "",
-    };
-  },
-  watch: {
-    errors:  function (val){
-      console.log('errors happened', val)
-        // router.push({ path: "login" })
-        this.logOut(val)
-    }
-  },
+        login: true,
+      }
+    },
+    computed: {
+      userIsAuthenticated () {
+        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      },
+      user () {
+   
+        return this.$store.getters.user
+      },
+      error () {
+        return this.$store.getters.error
+      },
+      loading () {
+        return this.$store.getters.loading
+      }
+    },
+    watch: {
+      user (value) {
+        console.log('USER CHANGED')
+        console.log(value)
+        if (value == null || value == undefined) {
+          this.$router.push('/login')
+        }
+      }
+    },
   mounted(){
-    //  this.$once(this.logOut())
-console.log(this.$router.history.current.fullPath)
-    this.thisRoute = this.$router.history.current.fullPath
-  },
-   created() {
-  
-    if(!window.localStorage.getItem('loginEmail')  || window.localStorage.getItem('loginEmail') == 'undefined'){
-          // router.push({ path: "login" })
-        this.logOut("Session timed out")    
-        return      
+    console.log('default layout mounted')
+    if(!this.userIsAuthenticated){
+          this.$router.push('/login')      
     }
+          this.$store.dispatch('loadOnlineUsers')
 
-    this.imageURL = window.localStorage.getItem('image')
-     
-    this.userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
+    //  this.$once(this.logOut())
+// console.log(this.$router.history.current.fullPath)
+    // this.thisRoute = this.$router.history.current.fullPath
   },
+  //  created() {
+  
+  //   // if(!window.localStorage.getItem('loginEmail')  || window.localStorage.getItem('loginEmail') == 'undefined'){
+  //   //       // router.push({ path: "login" })
+  //   //     this.logOut("Session timed out")    
+  //   //     return      
+  //   // }
+
+  //   this.imageURL = window.localStorage.getItem('image')
+     
+  //   // this.userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
+  // },
   methods: {
-    openURL,
+    // openURL,
      logOut(reason) {
     if(reason){
     Notify.create(reason)

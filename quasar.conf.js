@@ -3,7 +3,7 @@
 module.exports = function(ctx) {
   return {
     // plugins: ["axios", "vuelidate", "vue2-google-maps",  "dotenv"],
-    plugins: ["axios", "vuelidate"],
+    plugins: ["axios", "vuelidate", "firebase"],
     css: ["app.styl"],
     extras: [
       ctx.theme.mat ? "roboto-font" : null,
@@ -35,7 +35,7 @@ module.exports = function(ctx) {
           // test: /\.(js|mqtt)$/,
 
         //  test: /node_modules[/\\]mqtt/i,
-          loader: 'shebang-loader',
+          // loader: 'shebang-loader',
           //exclude: /(node_modules|quasar)/
         })
 

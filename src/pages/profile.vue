@@ -1,7 +1,7 @@
 <template>
   <q-page padding class="row justify-center">
 
-      <div v-if="okShow" style="width: 800px; max-width: 90vw;" >
+    <div style="width: 800px; max-width: 90vw;" :v-if="userIsAuthenticated" >
     
 
       <q-tabs inverted color="secondary" align="justify">
@@ -12,7 +12,7 @@
         <q-tab-pane name="mails">
                     <div class="row">  
  <div class="col-md-3 col-lg-3 " >    
-                         <img v-bind:src="imageURL" style="height: 160px;"> 
+                         <img v-bind:src="user.photoURL" style="height: 160px;"> 
                   
                          </div>
         <div class=" col-md-9 col-lg-9 "> 
@@ -20,14 +20,14 @@
                       <q-item>
                         <q-item-side label>Position:</q-item-side>
                        <q-item-main>
-                        <q-item-tile>{{userInfo.department}}</q-item-tile>
+                        <q-item-tile>{{user.department}}</q-item-tile>
                          </q-item-main>
                       </q-item>
                       <q-item>
                         <q-item-side label>Hire date:</q-item-side>
                        <q-item-main>
                         
-                        <q-item-tile>{{userInfo.hire_date}}</q-item-tile>
+                        <q-item-tile>{{user.hire_date}}</q-item-tile>
                        </q-item-main>
 
                       </q-item>
@@ -35,18 +35,18 @@
                         <q-item>
                         <q-item-side label>Home Address:</q-item-side>
                <q-item-main>
-                 {{profile.address}}
-                 <br>{{profile.city}}
-                 <br> {{profile.country}}
+                 {{user.address}}
+                 <br>{{user.city}}
+                 <br> {{user.country}}
                  </q-item-main>  
                       </q-item>
                       <q-item>
                         <q-item-side label>Email:</q-item-side>
-                        <q-item-main><a href="mailto:"profile.email>{{profile.email}}</a></q-item-main>
+                        <q-item-main><a href="mailto:"profile.email>{{user.email}}</a></q-item-main>
                       </q-item>
                       <q-item>
                         <q-item-side label>Phone Number:</q-item-side>
-                        <q-item-main>{{profile.phone}}
+                        <q-item-main>{{user.phone}}
                         </q-item-main>
                       </q-item>
                      
@@ -59,7 +59,7 @@
         <q-tab-pane name="movies">History</q-tab-pane>
       </q-tabs>
       </div>
-    </div>
+    </div> 
     
 </q-page>
     </template>
@@ -70,37 +70,53 @@
 
 
 <script>
-import auth from "../utils/auth";
-import store from "../store";
+// import auth from "../utils/auth";
+// import store from "../store";
 
 export default {
   name: "Profile",
   data: () => ({
-    profile: {},
-    userInfo: {},
-    imageURL: "",
-    okShow: false,
-    errors: []
+    // profile: {},
+    // userInfo: {},
+    // imageURL: "",
+    // okShow: false,
+     errors: []
   }),
-  created() {
-    console.log('loaded profile')
-    //if(window.localStorage.getItem('token')){
-    this.getUserProfile();
-    // }else{
-    //  router.push({ path: "login" })
-    //  }
-  },
+  computed: {
+      userIsAuthenticated () {
+        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      },
+      user () {
+   
+        return this.$store.getters.user
+      },
+      error () {
+        return this.$store.getters.error
+      },
+      loading () {
+        return this.$store.getters.loading
+      }
+    },
+    watch: {
+      user (value) {
+        console.log(value)
+        if (value == null || value == undefined) {
+          // this.$router.push('/profile')
+          console.log('lost user')
+        }
+      }
+    },
   methods: {
 
-    getUserProfile() {
-    if(window.localStorage.getItem("userInfo")){
-      this.profile = JSON.parse(window.localStorage.getItem("profile"))
-      this.imageURL = window.localStorage.getItem("image")
-      this.userInfo = JSON.parse(window.localStorage.getItem("userInfo"))
-      this.okShow = true
-console.log(this.okShow)
-    }
-    }
+//     getUserProfile() {
+//     if(window.localStorage.getItem("userInfo")){
+//       this.profile = JSON.parse(window.localStorage.getItem("profile"))
+//       this.imageURL = window.localStorage.getItem("image")
+//       this.userInfo = JSON.parse(window.localStorage.getItem("userInfo"))
+//       this.okShow = true
+// console.log(this.okShow)
+//     }
+//     }
   }
 };
 </script>
