@@ -18,7 +18,7 @@
         <div class=" col-md-9 col-lg-9 "> 
                   <q-list highlight>
                       <q-item>
-                        <q-item-side label>Position:</q-item-side>
+                        <q-item-side label>Position:x</q-item-side>
                        <q-item-main>
                         <q-item-tile>{{user.department}}</q-item-tile>
                          </q-item-main>
