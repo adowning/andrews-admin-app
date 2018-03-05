@@ -19,7 +19,7 @@ module.exports = function(ctx) {
     },
     build: {
       scopeHoisting: true,
-      vueRouterMode: "history",
+      vueRouterMode: "hash",
       // gzip: true,
       // analyze: true,
       // extractCSS: false,
@@ -29,7 +29,8 @@ module.exports = function(ctx) {
     devServer: {
       // https: true,
       // port: 8080,
-      open: true, // opens browser window automatically
+      open: false, // opens browser window automatically
+      clientLogLevel: "none",
     },
     framework: "all", //TODO remove this later on
     // framework: {

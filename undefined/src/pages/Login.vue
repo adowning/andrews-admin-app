@@ -7,7 +7,6 @@
         <h4>Andrews Administration Application</h4>
         <div class="doc-container q-pa-xl">
           <div class="row justify-center ">
-         <form  >
         <div class="input-group ">
           <span class="input-group-addon "><i class="fa fa-envelope"></i></span>
           <input class="form-control " name="email" placeholder="Email" type="text" model="form.email">
@@ -19,7 +18,7 @@
 		<div class="q-pa-sm">
            <q-btn  color="primary" @click="onSignin">Submit</q-btn>
 		</div>
-	  </form>
+	
             </div>
           </div>
 		       <div class="row justify-center">

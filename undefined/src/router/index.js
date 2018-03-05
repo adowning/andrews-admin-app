@@ -1,8 +1,8 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue"
+import VueRouter from "vue-router"
 
-import routes from './routes'
-
+import routes from "./routes"
+import store from "../store"
 Vue.use(VueRouter)
 
 const Router = new VueRouter({
@@ -18,7 +18,21 @@ const Router = new VueRouter({
   mode: process.env.VUE_ROUTER_MODE,
   base: process.env.VUE_ROUTER_BASE,
   scrollBehavior: () => ({ y: 0 }),
-  routes
+  routes,
 })
-
+Router.beforeEach((to, from, next) => {
+  if (to.path != "/login") {
+    if (store.getters.user) {
+      console.log("There is a user, resume. (" + to.path + ")")
+      next()
+    } else {
+      console.log("There is no user, redirect to login. (" + to.path + ")")
+      next("login")
+    }
+  } else {
+    console.log("You're on the login page")
+    next() // This is where it should have been
+  }
+})
+console.log(Router.mode)
 export default Router

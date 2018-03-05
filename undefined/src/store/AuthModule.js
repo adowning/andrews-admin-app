@@ -1,4 +1,6 @@
-import firebase from "firebase"
+//  import firebase from "firebase"
+import * as firebase from "firebase"
+
 const AuthModule = {
   state: {
     user: null,
@@ -29,12 +31,15 @@ const AuthModule = {
   },
   actions: {
     signUserIn({ commit }, payload) {
-      console.log(payload)
       commit("setLoading", true)
-      commit("clearError")
       firebase
         .auth()
-        .signInWithEmailAndPassword(payload.email, payload.password)
+        .signInWithEmailAndPassword("d@d.com", "asdfasdf")
+        .catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code
+          var errorMessage = error.message
+        })
         .then(user => {
           firebase
             .database()
@@ -43,7 +48,6 @@ const AuthModule = {
             .once("value", function(data) {
               commit("setLoading", false)
               // console.log(data.val().DisplayName)
-              console.log(data.val().username)
               const newUser = {
                 id: user.uid,
                 username: data.val().username,
