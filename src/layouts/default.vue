@@ -24,6 +24,7 @@
     <q-layout-drawer
       v-model="leftDrawerOpen"
       content-class="bg-grey-2"
+ 
     >
      <div id="profile">
        <div row>
@@ -87,7 +88,7 @@
     <q-layout-footer v-model="footer"  >
       <q-toolbar :inverted="$q.theme === 'ios'" style="background-color: #31CCEC !important; color:#4c566a;">
         <q-toolbar-title class="q-caption">
-          "If you can't measure it, you can't improve it."   
+     
         </q-toolbar-title>
       </q-toolbar>
     </q-layout-footer>
@@ -104,7 +105,7 @@ export default {
 	name: "LayoutDefault",
 	data() {
 		return {
-			leftDrawerOpen: false,
+			leftDrawerOpen: true,
 			search: {},
 			footer: true,
 		}
@@ -139,11 +140,11 @@ export default {
 		},
 	},
 	created() {
-		console.log("default layout created")
-		if (!this.userIsAuthenticated) {
-			console.log("  xfering to login")
-			this.$router.push("/login")
-		}
+		// console.log("default layout created")
+		// if (!this.userIsAuthenticated) {
+		// 	console.log("  xfering to login")
+		// 	this.$router.push("/login")
+		// }
 		this.$store.dispatch("loadOnlineUsers")
 	},
 

@@ -13,6 +13,10 @@ export default [
       {
         path: "/profile",
         component: () => import("pages/Profile"),
+      },      
+      {
+        path: "/directory",
+        component: () => import("components/Directory"),
       },
     ],
   },
