@@ -5,7 +5,8 @@
   "productName": "AndrewsAdminApp",
   "cordovaId": "org.cordova.quasar.app",
   "author": "adowning <ashdowning@gmail.com>",
-  "private": true,
+  "asar": true,
+  "private": false,
   "repository": "https://github.com/UserName/RepoName",
   "build": {
     "publish": [

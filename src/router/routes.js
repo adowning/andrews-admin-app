@@ -16,7 +16,7 @@ export default [
       },
       {
         path: "/directory",
-        component: () => import("components/Services"),
+        component: () => import("components/Directory"),
       },
     ],
   },
