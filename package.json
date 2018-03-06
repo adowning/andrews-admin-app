@@ -6,6 +6,13 @@
   "cordovaId": "org.cordova.quasar.app",
   "author": "adowning <ashdowning@gmail.com>",
   "private": true,
+
+  "repository": "https://github.com/UserName/RepoName",
+  "scripts": {
+    "build": "build --win",
+    "ship": "build --win -p always"
+  },
+
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev"
@@ -30,9 +37,4 @@
     "node": ">= 8.9.0",
     "npm": ">= 5.6.0"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 10"
-  ]
-}
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 10"]}
