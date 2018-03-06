@@ -2,7 +2,8 @@ import { app, BrowserWindow } from "electron"
 app.commandLine.appendSwitch("remote-debugging-port", "8315")
 const Config = require("electron-config")
 const config = new Config()
-
+import { autoUpdater } from "electron-updater"
+autoUpdater.checkForUpdatesAndNotify()
 /**
  * Set `__statics` path to static files in production;
  * The reason we are setting it here is that the path needs to be evaluated at runtime

@@ -7125,11 +7125,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_electron__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_electron___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_electron__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_electron_updater__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_electron_updater___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_electron_updater__);
 
 
 __WEBPACK_IMPORTED_MODULE_1_electron__["app"].commandLine.appendSwitch("remote-debugging-port", "8315");
 var Config = __webpack_require__(84);
 var config = new Config();
+
+__WEBPACK_IMPORTED_MODULE_2_electron_updater__["autoUpdater"].checkForUpdatesAndNotify();
 
 if (false) {
   global.__statics = require("path").join(__dirname, "statics").replace(/\\/g, "\\\\");
@@ -7626,6 +7630,12 @@ module.exports = function (it) {
 /***/ (function(module, exports) {
 
 module.exports = require("electron-config");
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports) {
+
+module.exports = require("electron-updater");
 
 /***/ })
 /******/ ]);

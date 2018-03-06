@@ -6,20 +6,31 @@
   "cordovaId": "org.cordova.quasar.app",
   "author": "adowning <ashdowning@gmail.com>",
   "private": true,
-
   "repository": "https://github.com/UserName/RepoName",
-  "scripts": {
-    "build": "build --win",
-    "ship": "build --win -p always"
+  "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "adowning",
+        "repo": "electron-updater-example"
+      }
+    ],
+    "win": {
+      "publish": ["github"]
+    }
   },
-
+  "win": {
+    "publish": ["github"]
+  },
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
-    "dev": "quasar dev"
+    "dev": "quasar dev",
+    "publish": "build -p always"
   },
   "dependencies": {
     "axios": "^0.17.1",
     "electron-config": "^1.0.0",
+    "electron-updater": "^2.21.0",
     "firebase": "^4.10.1",
     "vuelidate": "^0.6.2",
     "vuetify": "^1.0.4",
@@ -28,6 +39,7 @@
   "devDependencies": {
     "devtron": "1.4.0",
     "electron": "1.7.9",
+    "electron-builder": "^20.2.1",
     "electron-debug": "1.4.0",
     "electron-devtools-installer": "2.2.1",
     "electron-packager": "9.1.0",
@@ -37,4 +49,5 @@
     "node": ">= 8.9.0",
     "npm": ">= 5.6.0"
   },
-  "browserslist": ["> 1%", "last 2 versions", "not ie <= 10"]}
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 10"]
+}
