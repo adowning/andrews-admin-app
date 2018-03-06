@@ -1,0 +1,11 @@
+directories:
+  output: dist
+  buildResources: build
+publish:
+  - provider: github
+    owner: adowning
+    repo: andrews-admin-app
+win:
+  publish:
+    - github
+electronVersion: 1.7.9
