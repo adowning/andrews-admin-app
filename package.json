@@ -1,23 +1,20 @@
 {
-  "name": "opol5",
+  "name": "Andrews-Admin-App",
   "version": "v0.1.0b",
   "description": "Administration app for Andrews",
   "productName": "AndrewsAdminApp",
   "cordovaId": "org.cordova.quasar.app",
   "author": "adowning <ashdowning@gmail.com>",
-  "asar": true,
+  "main": "src-electron/electron-main.js",
   "private": false,
   "repository": "https://github.com/UserName/RepoName",
   "build": {
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "adowning",
-        "repo": "electron-updater-example"
-      }
-    ],
+    "squirrelWindows": {
+      "remoteReleases": "http://localhost:9000/dist/win1/"
+    },
     "win": {
-      "publish": ["github"]
+      "certificateFile": "./certs/my_signing_key.pfx",
+      "certificatePassword": ""
     }
   },
   "win": {

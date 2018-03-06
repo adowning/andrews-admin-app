@@ -4,7 +4,7 @@ directories:
 publish:
   - provider: github
     owner: adowning
-    repo: andrews-admin-app
+    repo: electron-updater-example
 win:
   publish:
     - github
