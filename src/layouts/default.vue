@@ -97,8 +97,9 @@
 
 <script>
 import { openURL } from "quasar"
-import _router from "../router"
+import router from "../router"
 import footer from "quasar"
+import store from "../store"
 import { Notify } from "quasar"
 const querystring = require("querystring")
 export default {
@@ -108,10 +109,14 @@ export default {
 			leftDrawerOpen: true,
 			search: {},
 			footer: true,
+			// user: null,
 		}
 	},
 	// beforeRouteEnter(to, from, next) {
-	// 	console.log("entered my shit")
+	// 	var vm = this
+	// 	if (!store.getters.user) {
+	// 		router.push("/login")
+	// 	}
 	// },
 	computed: {
 		userIsAuthenticated() {

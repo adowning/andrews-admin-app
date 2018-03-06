@@ -38,7 +38,7 @@
 import { required, email } from "vuelidate/lib/validators"
 import { Notify } from "quasar"
 import router from "../router"
-
+import firebase from "./firebaseInit"
 export default {
 	data() {
 		return {

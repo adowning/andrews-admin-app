@@ -21,13 +21,13 @@ const Router = new VueRouter({
   routes,
 })
 Router.beforeEach((to, from, next) => {
-  if (to.path != "/login") {
+  if (to.path != "/") {
     if (store.getters.user) {
       console.log("There is a user, resume. (" + to.path + ")")
       next()
     } else {
       console.log("There is no user, redirect to login. (" + to.path + ")")
-      next("login")
+      next("/")
     }
   } else {
     console.log("You're on the login page")

@@ -3,20 +3,20 @@ import AuthGuard from "./auth-guard"
 export default [
   {
     // Always leave this as last one
-    path: "/login",
-    component: () => import("pages/Login"),
+    path: "/",
+    component: () => import("components/Login"),
   },
   {
-    path: "/",
+    path: "/default",
     component: () => import("layouts/default"),
     children: [
       {
         path: "/profile",
         component: () => import("pages/Profile"),
-      },      
+      },
       {
         path: "/directory",
-        component: () => import("components/Directory"),
+        component: () => import("components/Services"),
       },
     ],
   },

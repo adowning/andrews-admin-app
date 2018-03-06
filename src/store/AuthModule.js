@@ -1,6 +1,6 @@
 //  import firebase from "firebase"
-import * as firebase from "firebase"
-
+// import * as firebase from "firebase"
+import firebase from "../components/firebaseInit"
 const AuthModule = {
   state: {
     user: null,
@@ -32,6 +32,7 @@ const AuthModule = {
   actions: {
     signUserIn({ commit }, payload) {
       commit("setLoading", true)
+      firebase.databaseURL = "https://andrewsadmin.firebaseio.com"
       firebase
         .auth()
         .signInWithEmailAndPassword("d@d.com", "asdfasdf")
@@ -58,6 +59,7 @@ const AuthModule = {
             })
         })
         .catch(error => {
+          console.log(error)
           commit("setLoading", false)
           commit("setError", error)
         })

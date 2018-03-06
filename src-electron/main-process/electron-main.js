@@ -1,5 +1,7 @@
 import { app, BrowserWindow } from "electron"
 app.commandLine.appendSwitch("remote-debugging-port", "8315")
+const Config = require("electron-config")
+const config = new Config()
 
 /**
  * Set `__statics` path to static files in production;
@@ -11,25 +13,30 @@ if (process.env.PROD) {
     .replace(/\\/g, "\\\\")
 }
 
-let mainWindow
+let win
 
 function createWindow() {
   /**
    * Initial window options
    */
-  mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
-    fullscreen: false,
-    useContentSize: true,
-    movable: true,
-    resizable: true,
-  })
+  let opts = {
+    show: false,
+    backgroundColor: "#4c566a",
+    webPreferences: {
+      // nodeIntegration: false,
+      partition: "persist:main",
+    },
+  }
+  Object.assign(opts, config.get("winBounds"))
+  win = new BrowserWindow(opts)
+  win.loadURL(process.env.APP_URL)
 
-  mainWindow.loadURL(process.env.APP_URL)
+  win.once("ready-to-show", win.show)
 
-  mainWindow.on("closed", () => {
-    mainWindow = null
+  win.loadURL(process.env.APP_URL)
+
+  win.on("close", () => {
+    config.set("winBounds", win.getBounds())
   })
 }
 
@@ -42,7 +49,7 @@ app.on("window-all-closed", () => {
 })
 
 app.on("activate", () => {
-  if (mainWindow === null) {
+  if (win === null) {
     createWindow()
   }
 })

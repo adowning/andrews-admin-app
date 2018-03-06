@@ -3,7 +3,7 @@ import "vuetify/dist/vuetify.min.css"
 
 export default ({ app, Vue }) => {
   // do some logic here...
-
+  console.log("see me roar")
   Vue.use(Vuetify)
   // ... then, kick off our Quasar website/app:
   new Vue(app)

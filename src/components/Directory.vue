@@ -108,15 +108,17 @@
 </template>
 
 <script>
-import firebase from "firebase"
+// import firebase from "firebase"
+import firebase from "./firebaseInit"
 import "firebase/firestore"
+import "firebase/storage"
 
 const db = firebase.firestore()
 const storageRef = firebase.storage().ref()
 const imagesRef = storageRef.child("home")
 
 export default {
-	name: "Gallery",
+	name: "Directory",
 	data() {
 		return {
 			valid: true,
@@ -151,8 +153,10 @@ export default {
 			},
 		}
 	},
+
 	methods: {
 		listPhotos() {
+			console.log(db)
 			this.homePhotos = []
 			this.postPhotos = []
 			db
@@ -161,6 +165,8 @@ export default {
 				.get()
 				.then(querySnapshot => {
 					querySnapshot.forEach(doc => {
+						console.log("photos")
+
 						const homePhoto = {
 							id: doc.id,
 							name: doc.data().name,
@@ -171,6 +177,12 @@ export default {
 						this.homePhotos.push(homePhoto)
 						console.log("photos", homePhoto.position)
 					})
+				})
+				.catch(function(error) {
+					// Handle Errors here.
+					var errorCode = error.code
+					var errorMessage = error.message
+					console.log(errorMessage)
 				})
 		},
 		processFiles(event) {

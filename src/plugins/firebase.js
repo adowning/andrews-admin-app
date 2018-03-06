@@ -21,11 +21,11 @@ const config = {
   },
 }
 import store from "../store"
-const firebaseApp = firebase.initializeApp(config.firebase_config)
+// const firebaseApp = firebase.initializeApp(config.firebase_config)
 
 export default ({ app, Vue, router }) => {
   // something to do
   //TODO fix  const firebaseApp = firebase.initializeApp(process.env.NODE_ENV !== 'production' ? config.firebase_config_dev : config.firebase_config)
   // console.log(firebaseApp)
-  Vue.prototype.$firebase = firebaseApp
+  // Vue.prototype.$firebase = firebaseApp
 }
