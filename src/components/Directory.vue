@@ -1,108 +1,32 @@
 <template>
-  <div id="Gallery" >
-      <!--GALLERY TABLE-->
-        <v-container fluid>
-            <v-layout row justify-center>
-            <v-flex md11 xs12>
-                <v-card>
-                    <v-card-title class="headline pink darken-2 white--text">Gallery</v-card-title>
-                    <v-data-table
-                        v-bind:headers="tableHeaders"
-                        :items="homePhotos"
-                        hide-actions
-                        class="elevation-1"
-                        >
-                        <template slot="items" slot-scope="props">
-                            <td><img :src="props.item.url" class="preview pointer" @click="openPreview()"></td>
-                            <td class="text-xs-right">{{ props.item.position }}</td>
-                            <td class="text-xs-right">{{ props.item.name }}</td>
-                            <td class="text-xs-right">{{ props.item.path }}</td>
-                            <td class="text-xs-right">
-                                <v-btn icon  @click="startPosition(props.item)"><v-icon>fa-pencil</v-icon></v-btn>
-                                <v-btn icon  @click="deletePhoto(props.item, 'homePhotos')"><v-icon>fa-times</v-icon></v-btn>
-                            </td>
-                        </template>
-                    </v-data-table>
-                </v-card>
-            </v-flex>
-        </v-layout>   
-        </v-container> 
-        <v-btn color="pink darken-2" dark fixed bottom right fab @click.native.stop="uploadDialog = !uploadDialog">
-            <v-icon>fa-upload</v-icon>
-        </v-btn>
-<!--PREVIEW MODAL-->
-<!-- <v-layout row>
-    <v-dialog v-model="previewDialog" max-width="768px">
-      <v-card class="text-xs-center">
-            <v-carousel hide-delimiters>
-                <v-carousel-item class="fit" v-for="(item,i) in homePhotos" v-bind:src="item.url" :key="i"></v-carousel-item>
-            </v-carousel>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="green darken-1" flat="flat" @click.native="closePreview()">Close</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-layout> -->
-<!--UPLOAD MODAL-->
-        <v-layout row justify-center>
-            <!-- <v-dialog v-model="uploadDialog" persistent max-width="500px">
-            <v-card>
-                <v-card-title>
-                <span class="headline">Photo Upload</span>
-                </v-card-title>
-                <v-card-text>
-                <v-container grid-list-md>
-                    <v-layout wrap>
-                    <form>
-                        <input type="file" multiple accept="image/*" @change="processFiles($event)" required>  
-                         <v-progress-linear v-model="uploadProgress"></v-progress-linear>
-                    </form>
-                    </v-layout>
-                </v-container>
-                </v-card-text>
-                <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" flat @click.native="cancelUpload()">Close</v-btn>
-                <v-btn color="teal darken-1" flat @click.native="uploadPhotos()">Upload</v-btn>
-                </v-card-actions>
-            </v-card>
-            </v-dialog> -->
-        </v-layout>
-
-        <!--POSITION PHOTO MODAL-->
-        <v-layout row justify-center>
-            <!-- <v-dialog v-model="positionDialog" persistent max-width="500px">
-            <v-card>
-                <v-card-title>
-                <span class="headline">Position Photo</span>
-                </v-card-title>
-                <v-card-text>
-                <v-container grid-list-md>
-                    <v-layout wrap>
-                    <v-flex xs12>
-                        <v-form v-model="valid">
-                        <v-text-field
-                        name="position"
-                        label="Position"
-                        id="position"
-                        type="number"
-                        v-model="currentPhoto.position"
-                        required
-                        ></v-text-field>
-                    </v-form>
-                    </v-flex>
-                    </v-layout>
-                </v-container>
-                </v-card-text>
-                <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" flat @click.native="cancelPosition()">Cancel</v-btn>
-                <v-btn color="teal darken-1" flat @click.native="positionPhoto(currentPhoto, 'homePhotos')" :disabled="!valid">Submit</v-btn>
-                </v-card-actions>
-            </v-card>
-            </v-dialog> -->
-        </v-layout>
+  <div id="Employees" >
+<q-layout >
+	<q-page-container>
+    <q-page padding class="row justify-center ">
+			<q-card inline style="width: 500px">
+  <q-card-media>
+    <img src="~assets/donuts.png">
+  </q-card-media>
+  <q-card-title>
+    Cafe Basilico
+    <q-rating slot="subtitle" v-model="stars" :max="5" />
+    <div slot="right" class="row items-center">
+      <q-icon name="place" /> 250 ft
+    </div>
+  </q-card-title>
+  <q-card-main>
+    <p>$・Italian, Cafe</p>
+    <p class="text-faded">Small plates, salads & sandwiches in an intimate setting.</p>
+  </q-card-main>
+  <q-card-separator />
+  <q-card-actions>
+    <q-btn flat round dense icon="event" />
+    <q-btn flat label="5:30PM" />
+    <q-btn flat label="7:30PM" />
+    <q-btn flat label="9:00PM" />
+    <q-btn flat color="primary" label="Reserve" />
+  </q-card-actions>
+</q-card>
         
   </div>
 </template>
